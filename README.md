@@ -1,0 +1,2 @@
+# SashBot
+Lazyvim config 
