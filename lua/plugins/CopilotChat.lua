@@ -170,6 +170,36 @@ return {
     event = "VeryLazy",
     keys = {
       {
+        "<leader>aF",
+        function()
+          local actions = require("telescope.actions")
+          require("telescope.builtin").find_files({
+              prompt_title = "Select a file to reference",
+              cwd = vim.fn.getcwd(), -- Adjust this as needed for your project's root
+              attach_mappings = function(prompt_bufnr, map)
+                  actions.select_default:replace(function()
+                      local selection = require("telescope.actions.state").get_selected_entry()
+                      actions.close(prompt_bufnr)
+                      -- Read file content safely and prepend filename
+                      vim.schedule(function()
+                          local file_path = selection.value
+                          local file_name = vim.fn.fnamemodify(file_path, ":t")  -- Extracts the tail (filename only)
+                          local file_content = vim.fn.readfile(file_path)
+                          local formatted_content = file_name .. ": " .. table.concat(file_content, " ")  -- Prepend filename
+                          -- Escape the string for safe command execution
+                          local command = "CopilotChat " .. vim.fn.shellescape(formatted_content)
+                          -- Execute the command
+                          vim.cmd(command)
+                      end)
+                  end)
+                  return true
+              end
+          })
+      end,
+      desc = "CopilotChat - Explain code",
+      noremap = true
+      },
+      {
         "<leader>aE",
         function()
           -- Check if the current buffer is empty
@@ -250,7 +280,6 @@ return {
         desc = "CopilotChat - Prompt actions",
       },
       -- Code related commands
-      { "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
       { "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
       { "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
       { "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },

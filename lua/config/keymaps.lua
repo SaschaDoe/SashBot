@@ -25,3 +25,13 @@ map("v", "<C-c>", '"+y', { noremap = true, silent = true })
 map("n", "<C-v>", '"+p', { noremap = true, silent = true })
 map("i", "<C-v>", "<C-r>+", { noremap = true, silent = true })
 map("v", "<C-x>", '"+x', { noremap = true, silent = true })
+
+map("n", "ö", "(", { noremap = true, silent = true })
+map("n", "Ö", "{", { noremap = true, silent = true })
+map("n", "<C-ö>", "[m", { noremap = true, silent = true })
+map("n", "ä", ")", { noremap = true, silent = true })
+map("n", "Ä", "}", { noremap = true, silent = true })
+map("n", "<C-ä>", "]m", { noremap = true, silent = true })
+
+-- find costume directory
+map("n", "<leader>fh", ":Telescope find_files hidden=true cwd=C:/Users/sasch/<CR>")
