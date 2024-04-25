@@ -14,3 +14,14 @@ map("n", "L", "$", { desc = "Move to the end of the line" })
 map("x", "<leader>d", "y`>p`<")
 map("x", "<C-K>", ":m '<-2<CR>gv=gvzz", { noremap = true, silent = true })
 map("x", "<C-J>", ":m '>+1<CR>gv=gvzz", { noremap = true, silent = true })
+
+map(
+  "n",
+  "<leader>fd",
+  "<cmd>lua require'telescope.builtin'.find_files({ find_command = {'fd', '--type', 'd'} })<CR>",
+  { noremap = true, silent = true }
+)
+map("v", "<C-c>", '"+y', { noremap = true, silent = true })
+map("n", "<C-v>", '"+p', { noremap = true, silent = true })
+map("i", "<C-v>", "<C-r>+", { noremap = true, silent = true })
+map("v", "<C-x>", '"+x', { noremap = true, silent = true })

@@ -172,7 +172,6 @@ return {
       {
         "<leader>aE",
         function()
-          print("inside leader aE")
           -- Check if the current buffer is empty
           local line_count = vim.api.nvim_buf_line_count(0)
           if line_count == 0 then
@@ -190,6 +189,34 @@ return {
           local code = table.concat(lines, "")
           local prompt = "Explain this code:"
           local full_prompt = prompt .. code
+
+          local escaped_prompt = vim.fn.escape(full_prompt, '"\\')
+          local command_string = 'CopilotChat "' .. escaped_prompt .. '"'
+          print(command_string)
+          vim.api.nvim_exec(command_string, false)
+        end,
+        desc = "CopilotChat - Explain code",
+      },
+      {
+        "<leader>aA",
+        function()
+          -- Check if the current buffer is empty
+          local line_count = vim.api.nvim_buf_line_count(0)
+          if line_count == 0 then
+            print("The buffer is empty.")
+            return
+          end
+
+          -- Get all lines from the current buffer
+          local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+          if #lines == 0 then
+            print("No lines were read from the buffer.")
+            return
+          end
+
+          local code = table.concat(lines, "")
+          local prompt = "Do you understand this code? Answer with just one word! Yes no or maybe"
+          local full_prompt = code .. prompt
 
           local escaped_prompt = vim.fn.escape(full_prompt, '"\\')
           local command_string = 'CopilotChat "' .. escaped_prompt .. '"'
